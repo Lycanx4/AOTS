@@ -8,16 +8,27 @@ import java.util.*;
 public class GameBoard {
     private Map<String,Stickman> blueArmy = new HashMap<>();
     private Map<String,Stickman> redArmy = new HashMap<>();
+
+    private Team turn;
     
     private int winner = 0;
     
-    private boolean endGame;
+    private boolean isGameEnd;
+
+    public Map<String, Stickman> getBlueArmy() {
+        return blueArmy;
+    }
+
+    public Map<String, Stickman> getRedArmy() {
+        return redArmy;
+    }
 
     private final String  TEAM_BLUE = Team.B.name();
     private final String  TEAM_RED = Team.R.name();
 
     public GameBoard(){
-        endGame = false;
+        isGameEnd = false;
+        this.turn = Team.B;
         for(int i = 1; i<=6; i++){
             String blueId = TEAM_BLUE + i;
             String redId = TEAM_RED + i;
@@ -25,6 +36,30 @@ public class GameBoard {
             redArmy.put(redId, new Stickman(redId));
         }
     }
+
+    public Team getTurn() {
+        return turn;
+    }
+
+    public String getCurrentTurnName() {
+        if(turn.equals(Team.B)){
+            return "Blue";
+        }
+        return "Red";
+    }
+
+    public boolean isGameEnd() {
+        return isGameEnd;
+    }
+
+    public String getTEAM_BLUE() {
+        return TEAM_BLUE;
+    }
+
+    public String getTEAM_RED() {
+        return TEAM_RED;
+    }
+
     public int rollDice(Enum team){
         Random random = new Random();
         int dice = random.nextInt(6) +1;
@@ -57,6 +92,13 @@ public class GameBoard {
             return true;
         }
         return false;
+    }
+    public void changeTurn(){
+        if(turn.equals(Team.B)){
+            turn = Team.R;
+        }else{
+            turn = Team.B;
+        }
     }
     public int getWinner() {
         if(blueArmy.size() == 0){

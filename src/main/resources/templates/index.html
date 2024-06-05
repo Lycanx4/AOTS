@@ -6,6 +6,16 @@
     <title>Home Page</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table td,
+        .table th {
+            min-width: 125px;
+        }
+
+        .mirrored-image {
+            transform: scaleX(-1);
+        }
+    </style>
 </head>
 <body>
 <!-- Navigation Bar -->
@@ -20,7 +30,7 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="/teams">Teams</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Pricing</a>
@@ -33,43 +43,43 @@
 </nav>
 
 <div class="container">
-    <h1 class="mt-5">ATTACK OF THE STICK MAN</h1>
-    <p th:text="${message}"></p>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <td>|</td>
-            <th scope="col">Second</th>
-            <th scope="col">#</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>|</td>
-            <td>Otto</td>
-            <th scope="row">1</th>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>|</td>
-            <td>Thornton</td>
-            <th scope="row">2</th>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Jacob</td>
-            <td>|</td>
-            <td>Thornton</td>
-            <th scope="row">3</th>
-        </tr>
-        </tbody>
-    </table>
+    <h1 class="mt-5 text-center">ATTACK OF THE STICK MAN</h1>
+    <div class="row justify-content-center">
+        <div class="col">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Team Blue</th>
+                    <td class="col text-center">
+                        <form th:action="@{/roll_dice}" th:method="get">
+                            <button th:text="@{__${turn}__ Roll Dice}"> </button>
+                        </form>
+                    </td>
+                    <th scope="col" class="text-center">Team Red</th>
+                    <th scope="col" class="text-center">#</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="team: ${teams}" style="height: 222px;">
+                    <th class="text-center" th:text="${team[0].id}"></th>
+                    <td class="justify-content-center align-items-start" >
+                        <img th:src="@{/images/aots__${team[0].stage}__.png}" alt="Team Blue" class="align-self-start" />
+                    </td>
+                    <td></td>
+                    <td class="justify-content-center align-items-start" >
+                        <img th:src="@{/images/aots__${team[1].stage}__.png}" alt="Team Red" class="align-self-start mirrored-image" />
+                    </td>
+                    <th class="text-center" th:text="${team[1].id}"></th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
