@@ -10,6 +10,7 @@ public class GameBoard {
     private Map<String,Stickman> redArmy = new HashMap<>();
 
     private Team turn;
+    private int armySize;
     
     private int winner = 0;
     
@@ -28,8 +29,9 @@ public class GameBoard {
 
     public GameBoard(){
         isGameEnd = false;
+        armySize = 2;
         this.turn = Team.B;
-        for(int i = 1; i<=6; i++){
+        for(int i = 1; i<=armySize; i++){
             String blueId = TEAM_BLUE + i;
             String redId = TEAM_RED + i;
             blueArmy.put(blueId, new Stickman(blueId));
@@ -60,9 +62,13 @@ public class GameBoard {
         return TEAM_RED;
     }
 
+    public void setGameEnd(boolean gameEnd) {
+        isGameEnd = gameEnd;
+    }
+
     public int rollDice(Enum team){
         Random random = new Random();
-        int dice = random.nextInt(6) +1;
+        int dice = random.nextInt(armySize) +1;
         String id = team.name() + dice;
         Stickman stickman;
         if(team.equals(Team.B) && blueArmy.containsKey(id)){
@@ -107,5 +113,9 @@ public class GameBoard {
             winner = 1;
         }
         return winner;
+    }
+
+    public int getArmySize() {
+        return armySize;
     }
 }

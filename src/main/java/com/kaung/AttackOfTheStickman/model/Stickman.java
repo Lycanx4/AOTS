@@ -14,6 +14,11 @@ public class Stickman {
         this.isAlive = true;
     }
 
+    public Stickman(){
+        this.id = "Dead";
+        this.stage = -1;
+        this.isAlive = false;
+    }
     public boolean stageUp() {
         if(stage<8){
             stage++;

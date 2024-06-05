@@ -11,7 +11,6 @@
         .table th {
             min-width: 125px;
         }
-
         .mirrored-image {
             transform: scaleX(-1);
         }
@@ -30,13 +29,13 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/teams">Teams</a>
+                <a class="nav-link" href="/teams">New Game</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link" th:href="@{/new_game}">Save Game</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Load Game</a>
             </li>
         </ul>
     </div>
@@ -65,11 +64,25 @@
                 <tr th:each="team: ${teams}" style="height: 222px;">
                     <th class="text-center" th:text="${team[0].id}"></th>
                     <td class="justify-content-center align-items-start" >
-                        <img th:src="@{/images/aots__${team[0].stage}__.png}" alt="Team Blue" class="align-self-start" />
+                        <img th:if="${team[0].isAlive}"
+                             th:src="@{/images/aots__${team[0].stage}__.png}"
+                             alt="Team Red"
+                             class="align-self-start" />
+                        <img th:unless="${team[0].isAlive}"
+                             th:src="@{/images/rip.png}"
+                             alt="Default Image"
+                             class="align-self-start" />
                     </td>
                     <td></td>
                     <td class="justify-content-center align-items-start" >
-                        <img th:src="@{/images/aots__${team[1].stage}__.png}" alt="Team Red" class="align-self-start mirrored-image" />
+                        <img th:if="${team[1].isAlive}"
+                             th:src="@{/images/aots__${team[1].stage}__.png}"
+                             alt="Team Red"
+                             class="align-self-start mirrored-image" />
+                        <img th:unless="${team[1].isAlive}"
+                             th:src="@{/images/rip.png}"
+                             alt="Default Image"
+                             class="align-self-start" />
                     </td>
                     <th class="text-center" th:text="${team[1].id}"></th>
                 </tr>
